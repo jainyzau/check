@@ -1,0 +1,25 @@
+<%= form_for(@work_record) do |f| %>
+    <% if @work_record.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@work_record.errors.count, "error") %> prohibited this work record from being saved:</h2>
+
+          <ul>
+            <% @work_record.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :work_id %><br>
+      <%= f.text_field :work_id %>
+    </div>
+    <div class="field">
+      <%= f.label :comment %><br>
+      <%= f.text_field :comment %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

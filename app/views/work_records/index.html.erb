@@ -1,0 +1,21 @@
+
+    <table>
+      <thead>
+      <tr>
+        <th>Work</th>
+        <th colspan="4">Record</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @work_records.each do |rec| %>
+        <tr>
+          <td><%= rec.work.name %></td>
+          <td><%= rec.created_at%></td>
+          <td><%= link_to 'Show', rec %></td>
+          <td><%= link_to 'Edit', edit_work_record_path(rec) %></td>
+          <td><%= link_to 'Destroy', rec, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= link_to 'New', new_work_record_path %>
