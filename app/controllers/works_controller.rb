@@ -4,7 +4,9 @@ class WorksController < ApplicationController
   # GET /works
   # GET /works.json
   def index
-    @works = Work.all
+    @works = Work.belongs_to_user(current_user.id)
+    @work = Work.new
+    @form_options = {remote: true}
   end
 
   # GET /works/1
@@ -25,11 +27,14 @@ class WorksController < ApplicationController
   # POST /works.json
   def create
     @work = Work.new(work_params)
+    @work.user_id = current_user.id
+    @works = Work.belongs_to_user(current_user.id)
 
     respond_to do |format|
       if @work.save
         format.html { redirect_to @work, notice: 'Work was successfully created.' }
         format.json { render :show, status: :created, location: @work }
+        format.js { @notice = 'Work was successfully created.' }
       else
         format.html { render :new }
         format.json { render json: @work.errors, status: :unprocessable_entity }
@@ -55,9 +60,11 @@ class WorksController < ApplicationController
   # DELETE /works/1.json
   def destroy
     @work.destroy
+    @works = Work.belongs_to_user(current_user.id)
     respond_to do |format|
       format.html { redirect_to works_url, notice: 'Work was successfully destroyed.' }
       format.json { head :no_content }
+      format.js { @notice = 'Work was successfully destroyed.' }
     end
   end
 
@@ -69,6 +76,6 @@ class WorksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def work_params
-      params.require(:work).permit(:name, :description, :user_id)
+      params.require(:work).permit(:name, :description)
     end
 end
