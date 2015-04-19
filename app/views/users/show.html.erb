@@ -1,14 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
+<h3><%=	 @user.name %></h3>
+<p>今天是: <%= @current_time.strftime('%Y-%m-%d') %></p>
+<div id="check_form">
+  <%= render 'check_form' %>
+</div>
+<div id="checked_works">
+  <%= render 'checked_works'%>
+</div>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back', users_path %> |
+<%= link_to 'Show All Records', work_records_path(user_id:@user) %>

@@ -3,10 +3,11 @@ Rails.application.routes.draw do
 
   resources :works
 
-  resources :records
+  resources :work_records
 
   resources :users
 
+  root 'users#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

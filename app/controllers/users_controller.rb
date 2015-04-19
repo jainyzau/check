@@ -10,6 +10,9 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @current_time = Time.now
+    @work_record = WorkRecord.new
+    session[:user_id] = @user.id
   end
 
   # GET /users/new

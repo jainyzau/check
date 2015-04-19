@@ -14,7 +14,7 @@
       <tbody>
       <% user.works.each do |work| %>
 
-            <% work.records.each do |rec|%>
+            <% work.work_records.each do |rec|%>
               <tr>
                 <td><%= work.name %></td>
                 <td><%= rec.created_at %></td>

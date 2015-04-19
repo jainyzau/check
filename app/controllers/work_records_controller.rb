@@ -1,8 +1,14 @@
 class WorkRecordsController < ApplicationController
   before_action :set_work_record, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:index]
 
   def index
-    @work_records = WorkRecord.all
+    @user = current_user
+    if @user
+      @work_records = WorkRecord.belongs_to_user(@user).order(:created_at)
+    else
+      @work_records = WorkRecord.all
+    end
   end
 
   def new
@@ -22,10 +28,11 @@ class WorkRecordsController < ApplicationController
 
     respond_to do |format|
       if @work_record.save
-        format.html { redirect_to @work_record, notice: 'Work record was successfully created.' }
+        format.html { redirect_to @work_record.work.user, notice: 'Work record was successfully created.' }
         format.json { render :show, status: :created, location: @work_record }
+        format.js { @user = @work_record.work.user }
       else
-        format.html { render :new }
+        format.html { redirect_to @work_record.work.user, notice: 'Work record is not created.' }
         format.json { render json: @work_record.errors, status: :unprocessable_entity }
       end
     end
@@ -54,6 +61,11 @@ class WorkRecordsController < ApplicationController
   private
   def set_work_record
     @work_record = WorkRecord.find(params[:id])
+  end
+
+  def set_user
+    @user = User.find(params[:user_id]) if params[:user_id]
+
   end
 
   def work_record_params

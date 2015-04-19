@@ -1,0 +1,11 @@
+<% unless @user.checked_works.empty? %>
+<p>今天已经完成的任务：</p>
+<table>
+<% @user.checked_works.each do |work| %>
+  <tr>
+    <td><%=work.name%></td>
+    <td><%=work.work_records.when(Time.now).first.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>
